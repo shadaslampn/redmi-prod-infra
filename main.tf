@@ -75,3 +75,20 @@ resource "aws_security_group" "remote_access" {
     Name = "${var.project_name}-${var.project_env}-remote_access"
   }
 }
+
+#--------------#
+# EC2 Instance #
+#--------------#
+
+resource "aws_instance" "frontend" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  key_name               = aws_key_pair.auth_key.id
+  user_data              = file("userdata.sh")
+  tags = {
+    Name = "${var.project_name}-${var.project_env}-frontend"
+  }
+  lifecycle {
+    create_before_destroy = true
+  }
+}
