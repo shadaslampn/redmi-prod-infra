@@ -22,3 +22,13 @@ variable "region" {
   type        = string
   description = "aws data center region"
 }
+
+variable "hosted-zone-name" {
+  type        = string
+  description = "domain name"
+}
+
+variable "hostname" {
+  type        = string
+  description = "hostname"
+}
