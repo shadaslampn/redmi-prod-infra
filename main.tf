@@ -34,6 +34,14 @@ resource "aws_security_group" "http_access" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  ingress {
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
@@ -81,10 +89,10 @@ resource "aws_security_group" "remote_access" {
 #--------------#
 
 resource "aws_instance" "frontend" {
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
-  key_name               = aws_key_pair.auth_key.id
-  user_data              = file("userdata.sh")
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.auth_key.id
+  user_data     = file("userdata.sh")
   tags = {
     Name = "${var.project_name}-${var.project_env}-frontend"
   }
